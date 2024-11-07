@@ -67,6 +67,7 @@
         </form>
 
         <p id="passwordOutput">Your password will appear here</p>
+        <button type="button" id="copyBtn" style="display: none;">Copy Password</button>
     </div>
 
     <script>
@@ -83,6 +84,7 @@
 
             const password = generatePassword(length, includeUppercase, includeNumbers, includeSymbols);
             document.getElementById('passwordOutput').innerText = password;
+            document.getElementById('copyBtn').style.display = 'inline-block'; // Show copy button
         });
 
         function generatePassword(length, includeUppercase, includeNumbers, includeSymbols) {
@@ -108,6 +110,19 @@
 
             return password;
         }
+
+        document.getElementById('copyBtn').addEventListener('click', function () {
+            const password = document.getElementById('passwordOutput').innerText;
+            if (password && password !== 'Your password will appear here') {
+                navigator.clipboard.writeText(password).then(() => {
+                    alert('Password copied to clipboard!');
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                });
+            } else {
+                alert('No password to copy.');
+            }
+        });
     </script>
 </body>
 </html>
